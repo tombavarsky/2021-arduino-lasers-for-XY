@@ -38,11 +38,11 @@ float calc_angle(int left_dis, int right_dis) //returns the angle in rads
 {
   const int DIS_BETWEEN_SENSORS = 30000; //distance in millimeters
 
-  return atan(DIS_BETWEEN_SENSORS / (left_dis - right_dis)); //could be (right - left)
+  return atan((left_dis - right_dis) / DIS_BETWEEN_SENSORS); //could be (right - left)
 }
 float calc_dis(int left_dis, float angle) //returns the distance between the left sensor and wall
 {
-  return sin(angle) * left_dis;
+  return cos(angle) * left_dis;
 }
 
 byte read_from_roborio()
