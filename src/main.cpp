@@ -40,6 +40,10 @@ float calc_angle(int left_dis, int right_dis) //returns the angle in rads
 
   return atan(DIS_BETWEEN_SENSORS / (left_dis - right_dis)); //could be (right - left)
 }
+float calc_dis(int left_dis, float angle) //returns the distance between the left sensor and wall
+{
+  return sin(angle) * left_dis;
+}
 
 byte read_from_roborio()
 { // reads from roborio and returns the value
