@@ -60,6 +60,7 @@ void send_to_roborio(int data)
 
 void setup()
 {
+  Serial.begin(9600);
   const byte LEFT_SENSOR_PIN = 0;  //set later
   const byte RIGHT_SENSOR_PIN = 0; //set later
 
@@ -69,7 +70,6 @@ void setup()
   set_address(LEFT_SENSOR_PIN, RIGHT_SENSOR_PIN);
 
   Wire.begin();
-  Serial.begin(9600);
 }
 
 void loop()
@@ -78,9 +78,14 @@ void loop()
   int right_dis = right_sensor.readRangeContinuousMillimeters();
 
   const byte SHOOTING_SIGN = 0; //sign from roborio to send position while shooting
+  const byte FEEDER_SIGN = 0;   //sign from roborio to send position while in feeder
 
   if (read_from_roborio() == SHOOTING_SIGN)
   {
     send_to_roborio(calc_angle(left_dis, right_dis));
+  }
+  else if (read_from_roborio() == FEEDER_SIGN)
+  {
+    send_to_roborio(-1 * calc_angle(left_dis, right_dis));
   }
 }
